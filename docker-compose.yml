@@ -1,0 +1,106 @@
+version: '3'
+
+networks:
+  my_bridge_network:
+    driver: bridge
+
+services:
+  zoo1:
+    image: confluentinc/cp-zookeeper:latest
+    hostname: zoo1
+    container_name: zoo1
+    networks:
+      - my_bridge_network
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zoo1:2888:3888
+
+  kafka1:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka1
+    container_name: kafka1
+    networks:
+      - my_bridge_network
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+      - "9999:9999"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:19092,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092,DOCKER://host.docker.internal:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_HOSTNAME: ${DOCKER_HOST_IP:-127.0.0.1}
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    depends_on:
+      - zoo1
+
+  spark-yarn-master:
+    container_name: da-spark-yarn-master
+    build:
+      dockerfile: Dockerfile-yarn
+      context: .
+    image: da-spark-yarn-image
+    entrypoint: ['./entrypoint.sh', 'master']
+    volumes:
+      - ./book_data:/opt/spark/data
+      - ./spark_apps:/opt/spark/apps
+      - "./bigdata_project2:/opt/spark/bigdata_project2"
+      - "./flask-app/akademi/api_server/ing_data:/opt/spark/ing_data"
+    env_file:
+      - .env.spark
+    ports:
+      - '9090:8080'
+      - '9870:9870'
+      - '7077:7077'
+      - '8088:8088'
+    networks:
+      - my_bridge_network
+
+  spark-yarn-worker:
+    image: da-spark-yarn-image
+    entrypoint: ['./entrypoint.sh', 'worker']
+    depends_on:
+      - spark-yarn-master
+    env_file:
+      - .env.spark
+    volumes:
+      - ./book_data:/opt/spark/data
+      - ./spark_apps:/opt/spark/apps
+    networks:
+      - my_bridge_network
+
+  yarn-history-server:
+    container_name: da-spark-yarn-history
+    image: da-spark-yarn-image
+    entrypoint: ['./entrypoint.sh', 'history']
+    depends_on:
+      - spark-yarn-master
+    env_file:
+      - .env.spark
+    ports:
+      - '18080:18080'
+    networks:
+      - my_bridge_network
+
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile-flask
+    ports:
+      - "5000:5000"
+      - "5500:5500"
+    volumes:
+      - "./flask-app:/flask-app"
+    networks:
+      - my_bridge_network

@@ -1,0 +1,12 @@
+Click
+dlib
+Flask
+imutils
+itsdangerous
+Jinja2
+MarkupSafe
+numpy
+opencv-python
+Pillow
+scipy
+Werkzeug

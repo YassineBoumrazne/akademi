@@ -1,0 +1,111 @@
+[
+  {
+    "Dictionary": {
+      "br1": {
+        "ali ali": {
+          "drow": 0,
+          "yawn": 0,
+          "pos": 0,
+          "number": 0,
+          "docopen": 0,
+          "avgdrow": 0.012061403508771924,
+          "avgyawn": 0.04166666666666665,
+          "avgpos": 0.3804824561403508,
+          "avgdocopen": 0.10416666666666662,
+          "lastavgdrow": 0.0,
+          "lastavgyawn": 0.0,
+          "lastavgpos": 0.4444444444444444,
+          "lastavgdocopen": 0.4444444444444444,
+          "drow_val": 1,
+          "paused": 1,
+          "update": 0,
+          "last5": 1708533190.2881923,
+          "count": 912,
+          "pavgdrow": 0.012101210121012096,
+          "pavgyawn": 0.04180418041804179,
+          "pavgpos": 0.3817381738173817,
+          "pavgdocopen": 0.10451045104510447,
+          "pcount": 909
+        },
+        "class&": {
+          "Cdrow": 0.0,
+          "Cyawn": 0.0,
+          "Cpos": 0.4444444444444444,
+          "Cdocopen": 0.4444444444444444,
+          "ClassStartTime": 1708532909.0547626,
+          "ClassEndTime": 0
+        }
+      },
+      "room1ss": {
+        "": {
+          "drow": 0,
+          "yawn": 0,
+          "pos": 1,
+          "number": 0,
+          "docopen": 0,
+          "avgdrow": 0.0,
+          "avgyawn": 0.006535947712418301,
+          "avgpos": 0.17647058823529418,
+          "avgdocopen": 0.1503267973856209,
+          "lastavgdrow": 0.0,
+          "lastavgyawn": 0.0,
+          "lastavgpos": 0.0,
+          "lastavgdocopen": 1.0,
+          "drow_val": 1,
+          "paused": 1,
+          "update": 0,
+          "last5": 1708533264.730298,
+          "count": 153,
+          "pavgdrow": 0.0,
+          "pavgyawn": 0.006711409395973154,
+          "pavgpos": 0.16778523489932892,
+          "pavgdocopen": 0.15436241610738255,
+          "pcount": 149
+        },
+        "class&": {
+          "Cdrow": 0.0,
+          "Cyawn": 0.0,
+          "Cpos": 0.0,
+          "Cdocopen": 1.0,
+          "ClassStartTime": 1708533199.0248392,
+          "ClassEndTime": 0
+        }
+      },
+      "jdie": {
+        "idjijde": {
+          "drow": 0,
+          "yawn": 0,
+          "pos": 1,
+          "number": 0,
+          "docopen": 0,
+          "avgdrow": 0,
+          "avgyawn": 0,
+          "avgpos": 1,
+          "avgdocopen": 0,
+          "lastavgdrow": 0,
+          "lastavgyawn": 0,
+          "lastavgpos": 0,
+          "lastavgdocopen": 0,
+          "drow_val": 1,
+          "paused": 0,
+          "update": 1,
+          "last5": 1708533276.4513977,
+          "count": 1,
+          "pavgdrow": 0,
+          "pavgyawn": 0,
+          "pavgpos": 1,
+          "pavgdocopen": 0,
+          "pcount": 1
+        },
+        "class&": {
+          "Cdrow": 0,
+          "Cyawn": 0,
+          "Cpos": 0,
+          "Cdocopen": 0,
+          "ClassStartTime": 1708533276.4513907,
+          "ClassEndTime": 0
+        }
+      }
+    }
+  }
+]
